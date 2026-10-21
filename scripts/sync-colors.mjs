@@ -39,7 +39,49 @@ const highlightScopes = {
   invalid: 'invalid.illegal',
 };
 
-// Named colors for the styles in theme.ts that MarkEdit-theming has no setting for
+// Code block token group (see syntaxTags in syntax.ts) -> TextMate scope VS Code gives the same code.
+// Groups whose scope has no color in the theme fall back to the editor text color.
+const syntaxScopes = {
+  comment: 'comment',
+  keyword: 'keyword',
+  operator: 'keyword.operator',
+  punctuation: 'punctuation',
+  embedded: 'punctuation.section.embedded',
+  string: 'string',
+  regexp: 'string.regexp',
+  escape: 'constant.character.escape',
+  constant: 'constant.language',
+  number: 'constant.numeric',
+  unit: 'keyword.other.unit',
+  builtin: 'support.function.builtin',
+  variable: 'variable.other.readwrite',
+  definition: 'variable.other.constant',
+  function: 'entity.name.function',
+  // JSON keys, CSS properties and JS member access share a tag; follow VS Code's CSS properties
+  property: 'support.type.property-name',
+  // Object keys, class members, methods and YAML keys share a tag; follow VS Code's object keys
+  key: 'meta.object-literal.key',
+  type: 'entity.name.type',
+  class: 'entity.other.attribute-name.class',
+  label: 'entity.other.attribute-name.id',
+  namespace: 'entity.name.namespace',
+  tag: 'entity.name.tag',
+  attribute: 'entity.other.attribute-name',
+  // The shell highlighter tags #! lines as meta, the same tag as diff @@ lines
+  meta: 'comment.line.shebang',
+};
+
+// Returns `color` with the alpha that makes it look like `target` over `background`.
+// Code blocks need a translucent background so the selection layer behind them shows through.
+function translucent(color, target, background) {
+  const channels = hex => [1, 3, 5].map(i => parseInt(hex.slice(i, i + 2), 16));
+  const [c, t, b] = [color, target, background].map(channels);
+  const alphas = c.map((value, i) => (value === b[i] ? 0 : (t[i] - b[i]) / (value - b[i])));
+  const alpha = Math.min(1, Math.max(0, alphas.reduce((sum, a) => sum + a, 0) / alphas.length));
+  return `${color.slice(0, 7)}${Math.round(alpha * 255).toString(16).padStart(2, '0')}`;
+}
+
+// Named colors for the styles in theme.ts and syntax.ts that MarkEdit-theming has no setting for
 function paletteColors(theme) {
   const colors = theme.colors;
   const token = (scope, field) => tokenColor(theme.tokenColors, scope, field);
@@ -50,24 +92,32 @@ function paletteColors(theme) {
     lineNumber: colors['editorLineNumber.foreground'],
     activeLineNumber: colors['editorLineNumber.activeForeground'],
     widgetBackground: colors['editorWidget.background'],
+    codeBlockBackground: translucent(
+      colors['editor.foreground'], colors['editorWidget.background'], colors['editor.background'],
+    ),
     border: colors['panel.border'],
     codeBackground: colors['textCodeBlock.background'],
     textLink: colors['textLink.foreground'],
-    command: colors['terminal.ansiCyan'],
+    // Shell $NAME and ${...} expansions (see shellVariableRanges in syntax.ts)
+    shellVariable: token('variable.other.normal.shell'),
     heading: token('markup.heading'),
     quote: token('markup.quote'),
     inlineCode: token('markup.inline.raw'),
-    link: token('string.other.link'),
-    comment: token('comment'),
     keyword: token('keyword'),
-    constant: token('constant'),
-    string: token('string'),
     function: token('entity.name.function'),
     tag: token('entity.name.tag'),
-    insertedText: token('markup.inserted'),
-    insertedBackground: token('markup.inserted', 'background'),
-    deletedText: token('markup.deleted'),
-    deletedBackground: token('markup.deleted', 'background'),
+    // Diffs use VS Code's diff view colors rather than the markup.inserted/deleted token colors
+    insertedText: colors['editor.foreground'],
+    insertedBackground: colors['diffEditor.insertedTextBackground'],
+    deletedText: colors['editor.foreground'],
+    deletedBackground: colors['diffEditor.removedTextBackground'],
+    // Keys in JSON and YAML code blocks (see languageAliases in syntax.ts)
+    jsonKey: token('support.type.property-name.json'),
+    yamlKey: token('entity.name.tag.yaml'),
+    rubyConstant: token('variable.other.constant.ruby'),
+    syntax: Object.fromEntries(
+      Object.entries(syntaxScopes).map(([name, scope]) => [name, token(scope) ?? colors['editor.foreground']]),
+    ),
   };
 }
 

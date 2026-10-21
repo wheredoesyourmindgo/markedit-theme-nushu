@@ -12,6 +12,12 @@
   ],
   "versions": [
     {
+      "version": "1.1.0",
+      "url": "https://github.com/wheredoesyourmindgo/markedit-theme-nushu/releases/download/v1.1.0/markedit-theme-nushu.js",
+      "sha256": "8fc6ebe24edef6732058db732839175d2f5624a295a4a87358baf4dcfcf7cb1f",
+      "notes": "Color code blocks to match Nushu for VS Code."
+    },
+    {
       "version": "1.0.0",
       "url": "https://github.com/wheredoesyourmindgo/markedit-theme-nushu/releases/download/v1.0.0/markedit-theme-nushu.js",
       "sha256": "f6f7c5248ae1533a7fe2e464ce94cb23ca03b61002cbe9eb4d83a3620ee1664b",

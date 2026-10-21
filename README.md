@@ -37,6 +37,8 @@ npm run build
 
 To build `dist/` without copying it into MarkEdit, for example in CI, set `CI=1`.
 
+`theme.ts` styles the markdown and `syntax.ts` styles code inside fenced code blocks. To check changes, open `demo/markdown.md` and `demo/code.md` (code in many languages) in MarkEdit. Code blocks are highlighted by MarkEdit's [Language Data](https://markedit-app.github.io/extensions/#markedit-language-data) extension.
+
 ## Publishing to the MarkEdit Extension Registry
 
 1. Bump `version` in `package.json`, run `CI=1 npm run build`, and commit `dist/`.

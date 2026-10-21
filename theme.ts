@@ -44,29 +44,24 @@ export function nushuTheme(palette: Palette, options?: { dark: boolean }) {
       ...color(palette.inlineCode),
       backgroundColor: important(palette.codeBackground),
     },
+    // Translucent so the selection, drawn in a layer behind the text, shows through
     '.cm-md-codeBlockWrapper, .cm-md-frontMatterWrapper': {
-      backgroundColor: important(palette.widgetBackground),
+      backgroundColor: important(palette.codeBlockBackground),
       borderColor: important(palette.border),
     },
     '.cm-md-codeBlock, .cm-md-frontMatter': color(palette.text),
-    // The shell highlighter tags $(...) and backticks as a quote; color them as commands, in the terminal cyan
-    '.cm-md-codeBlock .cm-md-quote': color(palette.command),
+    // The shell highlighter tags $(...) and backticks as a quote; VS Code shows them as plain code
+    '.cm-md-codeBlock .cm-md-quote': color(palette.text),
     '.cm-md-tableWrapper': { borderColor: important(palette.border) },
     // Table pipes and the divider row use the tag gold. .tok-meta is repeated to outrank the muted rule.
     '.cm-md-tableMark, .cm-md-tableMark.tok-meta': color(palette.tag),
     '.cm-md-horizontalRule': color(palette.lineNumber),
 
-    // Fenced code syntax (CodeMirror classHighlighter)
+    // Markdown syntax markers and diff lines. Other code block colors are in syntax.ts.
 
-    '.tok-comment': color(palette.comment),
-    '.tok-keyword, .tok-modifier, .tok-operatorKeyword, .tok-controlKeyword': color(palette.keyword),
-    '.tok-string, .tok-string2': color(palette.string),
-    '.tok-number, .tok-bool, .tok-atom, .tok-literal, .tok-propertyName, .tok-typeName, .tok-className': color(palette.constant),
-    '.tok-variableName': color(palette.text),
-    '.tok-variableName.tok-definition': color(palette.mutedText),
-    '.tok-function, .tok-variableName.tok-function': color(palette.function),
-    '.tok-tagName, .tok-macroName': color(palette.tag),
-    '.tok-meta, .tok-punctuation': color(palette.mutedText),
+    '.tok-meta': color(palette.mutedText),
+    // The diff highlighter also flags lines with trailing whitespace as invalid, which only
+    // MarkEdit-theming colors, so these rules win and those lines keep their diff colors
     '.tok-inserted': {
       ...color(palette.insertedText),
       backgroundColor: important(palette.insertedBackground),
