@@ -1,8 +1,9 @@
 import { overrideThemes } from 'markedit-theming';
-import { lightColors, darkColors } from './colors';
+import { lightColors, darkColors, lightPalette, darkPalette } from './colors';
+import { nushuTheme } from './theme';
 
 overrideThemes({
-  light: { colors: lightColors },
-  dark: { colors: darkColors },
+  light: { extension: nushuTheme(lightPalette), colors: lightColors },
+  dark: { extension: nushuTheme(darkPalette, { dark: true }), colors: darkColors },
   options: { settingsKey: 'extension.markeditThemeNushu' },
 });

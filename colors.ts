@@ -40,7 +40,7 @@ export const lightColors: Colors = {
     "label": "#635f54",
     "operator": "#99286e",
     "constant": "#0550ae",
-    "instruction": "#99286e",
+    "instruction": "#635f54",
     "invalid": "#611347"
   }
 };
@@ -83,7 +83,63 @@ export const darkColors: Colors = {
     "label": "#c1b7ae",
     "operator": "#db61a2",
     "constant": "#79c0ff",
-    "instruction": "#db61a2",
+    "instruction": "#c1b7ae",
     "invalid": "#f778ba"
   }
 };
+
+export const lightPalette = {
+  "text": "#2b2822",
+  "mutedText": "#635f54",
+  "activeLineBackground": "#eae8e3",
+  "lineNumber": "#989489",
+  "activeLineNumber": "#2b2822",
+  "widgetBackground": "#efede9",
+  "border": "#d6d4cfe6",
+  "codeBackground": "#bbb7ac33",
+  "textLink": "#0969da",
+  "command": "#1b7c83",
+  "heading": "#0550ae",
+  "quote": "#633c01",
+  "inlineCode": "#0550ae",
+  "link": "#0a3069",
+  "comment": "#1a7f37",
+  "keyword": "#99286e",
+  "constant": "#0550ae",
+  "string": "#0a3069",
+  "function": "#6639ba",
+  "tag": "#633c01",
+  "insertedText": "#633c01",
+  "insertedBackground": "#fae17d",
+  "deletedText": "#611347",
+  "deletedBackground": "#ffd3eb"
+};
+
+export const darkPalette: Palette = {
+  "text": "#d7cfc7",
+  "mutedText": "#c1b7ae",
+  "activeLineBackground": "#302b27",
+  "lineNumber": "#7e746a",
+  "activeLineNumber": "#d7cfc7",
+  "widgetBackground": "#2b2723",
+  "border": "#3f3b36e6",
+  "codeBackground": "#7e746a66",
+  "textLink": "#2f81f7",
+  "command": "#39c5cf",
+  "heading": "#79c0ff",
+  "quote": "#e3b341",
+  "inlineCode": "#79c0ff",
+  "link": "#a5d6ff",
+  "comment": "#2ea043",
+  "keyword": "#db61a2",
+  "constant": "#79c0ff",
+  "string": "#a5d6ff",
+  "function": "#bc8cff",
+  "tag": "#e3b341",
+  "insertedText": "#e3b341",
+  "insertedBackground": "#341a00",
+  "deletedText": "#f778ba",
+  "deletedBackground": "#42062a"
+};
+
+export type Palette = typeof lightPalette;
