@@ -105,7 +105,6 @@ function paletteColors(theme) {
     inlineCode: token('markup.inline.raw'),
     keyword: token('keyword'),
     function: token('entity.name.function'),
-    tag: token('entity.name.tag'),
     // Diffs use VS Code's diff view colors rather than the markup.inserted/deleted token colors
     insertedText: colors['editor.foreground'],
     insertedBackground: colors['diffEditor.insertedTextBackground'],

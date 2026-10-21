@@ -53,8 +53,9 @@ export function nushuTheme(palette: Palette, options?: { dark: boolean }) {
     // The shell highlighter tags $(...) and backticks as a quote; VS Code shows them as plain code
     '.cm-md-codeBlock .cm-md-quote': color(palette.text),
     '.cm-md-tableWrapper': { borderColor: important(palette.border) },
-    // Table pipes and the divider row use the tag gold. .tok-meta is repeated to outrank the muted rule.
-    '.cm-md-tableMark, .cm-md-tableMark.tok-meta': color(palette.tag),
+    // Table pipes and the divider row use the faint line-number gray, like horizontal rules;
+    // MarkEdit's GitHub theme would make them orange
+    '.cm-md-tableMark': color(palette.lineNumber),
     '.cm-md-horizontalRule': color(palette.lineNumber),
 
     // Markdown syntax markers and diff lines. Other code block colors are in syntax.ts.
