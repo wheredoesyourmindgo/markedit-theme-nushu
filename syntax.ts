@@ -59,6 +59,7 @@ const languageAliases: Record<string, string> = {
   ruby: 'ruby', rb: 'ruby',
   sh: 'shell', bash: 'shell', zsh: 'shell', shell: 'shell', shellscript: 'shell',
   css: 'css', scss: 'css', less: 'css',
+  sql: 'sql', pgsql: 'sql', postgresql: 'sql', postgres: 'sql', mysql: 'sql', sqlite: 'sql',
 };
 
 const languageClass = (language: string) => `nushu-lang-${language}`;
@@ -156,13 +157,50 @@ function shellRanges(text: string, commandFirst: boolean): ShellRange[] {
   return ranges;
 }
 
+const sqlFunctionClass = 'nushu-sql-function';
+const sqlFunction = /[A-Za-z_][A-Za-z0-9_]*(?=\()/y;
+// Keywords that are often written right before a paren, like VALUES(1) and IN(1, 2)
+const sqlParenKeywords = new Set(['values', 'in', 'exists', 'any', 'all', 'as', 'on', 'using', 'over', 'filter', 'within', 'key', 'references']);
+
+// Returns the ranges of function names (a name directly followed by an opening paren) in a line
+// of SQL, skipping strings, quoted identifiers and comments. The SQL highlighter doesn't tag
+// function calls, and tags some (COUNT) as keywords.
+function sqlFunctionRanges(text: string): [number, number][] {
+  const ranges: [number, number][] = [];
+  let quote: string | undefined;
+
+  for (let i = 0; i < text.length; ++i) {
+    const ch = text[i];
+    if (quote !== undefined) {
+      quote = ch === quote ? undefined : quote;
+    } else if (ch === "'" || ch === '"' || ch === '`') {
+      quote = ch;
+    } else if (ch === '-' && text[i + 1] === '-') {
+      break;
+    } else if (/[A-Za-z_]/.test(ch) && (i === 0 || !/[A-Za-z0-9_$.]/.test(text[i - 1]) || text[i - 1] === '.')) {
+      sqlFunction.lastIndex = i;
+      const match = sqlFunction.exec(text);
+      if (match && !sqlParenKeywords.has(match[0].toLowerCase())) {
+        ranges.push([i, i + match[0].length]);
+      }
+      while (i + 1 < text.length && /[A-Za-z0-9_]/.test(text[i + 1])) {
+        ++i;
+      }
+    }
+  }
+
+  return ranges;
+}
+
 // Tags don't say which language they came from, so mark the lines of each fenced
 // code block with its language. Only languages with their own colors are marked.
-// Shell variables and commands also get their own marks, since the highlighter gives
-// variables the same tag as assignments and doesn't tag most commands.
+// Shell variables and commands, and SQL function calls, also get their own marks, since the
+// highlighters give shell variables the same tag as assignments and don't tag most shell
+// commands or SQL function calls.
 function languageDecorations(view: EditorView): DecorationSet {
   const lines = new RangeSetBuilder<Decoration>();
   const marks = new RangeSetBuilder<Decoration>();
+  const sqlFunctionMark = Decoration.mark({ class: sqlFunctionClass });
   const shellMarks = Object.fromEntries(
     [shellVariableClass, shellPunctuationClass, shellCommandClass].map(name => [name, Decoration.mark({ class: name })]),
   );
@@ -192,6 +230,12 @@ function languageDecorations(view: EditorView): DecorationSet {
             lines.add(line.from, line.from, deco);
 
             const isFence = number === first || /^\s*(```|~~~)/.test(line.text);
+            if (language === 'sql' && !isFence) {
+              for (const [start, end] of sqlFunctionRanges(line.text)) {
+                marks.add(line.from + start, line.from + end, sqlFunctionMark);
+              }
+            }
+
             if (language === 'shell' && !isFence) {
               if (heredoc !== undefined && line.text.trim() === heredoc) {
                 heredoc = undefined;
@@ -262,6 +306,12 @@ export function nushuSyntax(palette: Palette, options?: { dark: boolean }): Exte
   // Element, class, pseudo-class and id selectors; the tags are shared with HTML and other languages
   const css = `.cm-md-codeBlock.${languageClass('css')}`;
   styles[['tag', 'class', 'label'].map(group => `${css} .${className(group)}`).join(', ')] = important(palette.cssSelector);
+
+  // SQL function calls are marked; types follow VS Code's SQL types. The type rule comes after the
+  // function rule so CHAR( and VARCHAR( in column definitions stay types.
+  const sql = `.cm-md-codeBlock.${languageClass('sql')}`;
+  styles[`${sql} .${sqlFunctionClass}, ${sql} .${sqlFunctionClass} *`] = important(palette.sqlFunction);
+  styles[`${sql} .${className('type')}`] = important(palette.sqlType);
 
   return [highlighter, languagePlugin, EditorView.theme(styles, options)];
 }

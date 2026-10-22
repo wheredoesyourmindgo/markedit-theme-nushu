@@ -104,6 +104,9 @@ function paletteColors(theme) {
     shellCommand: token('entity.name.command.shell'),
     // Selectors in CSS code blocks; VS Code scopes the rule to CSS, so match it exactly
     cssSelector: ruleColor(theme.tokenColors, 'source.css entity.name.tag'),
+    // SQL column types and function calls (see sqlFunctionRanges in syntax.ts)
+    sqlType: token('storage.type.sql'),
+    sqlFunction: ruleColor(theme.tokenColors, 'source.sql support.function'),
     heading: token('markup.heading'),
     quote: token('markup.quote'),
     inlineCode: token('markup.inline.raw'),
