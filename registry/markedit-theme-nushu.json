@@ -12,6 +12,12 @@
   ],
   "versions": [
     {
+      "version": "1.2.0",
+      "url": "https://github.com/wheredoesyourmindgo/markedit-theme-nushu/releases/download/v1.2.0/markedit-theme-nushu.js",
+      "sha256": "216e3fcc2b420af0b51fc8d3bf1c3b6d8ae0c3f7444ba13d8452da83d42c1279",
+      "notes": "Match Nushu 2.6.0 for VS Code: shell variables and commands, and CSS property names, selectors and units in code blocks."
+    },
+    {
       "version": "1.1.1",
       "url": "https://github.com/wheredoesyourmindgo/markedit-theme-nushu/releases/download/v1.1.1/markedit-theme-nushu.js",
       "sha256": "54e5b692459daf5cb1a379e208a19bd35c37b828701a3cea9d0dbea62ec022ca",

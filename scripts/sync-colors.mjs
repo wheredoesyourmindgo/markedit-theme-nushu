@@ -58,7 +58,7 @@ const syntaxScopes = {
   definition: 'variable.other.constant',
   function: 'entity.name.function',
   // JSON keys, CSS properties and JS member access share a tag; follow VS Code's CSS properties
-  property: 'support.type.property-name',
+  property: 'support.type.property-name.css',
   // Object keys, class members, methods and YAML keys share a tag; follow VS Code's object keys
   key: 'meta.object-literal.key',
   type: 'entity.name.type',
@@ -98,8 +98,12 @@ function paletteColors(theme) {
     border: colors['panel.border'],
     codeBackground: colors['textCodeBlock.background'],
     textLink: colors['textLink.foreground'],
-    // Shell $NAME and ${...} expansions (see shellVariableRanges in syntax.ts)
+    // Shell expansions and commands (see shellRanges in syntax.ts)
     shellVariable: token('variable.other.normal.shell'),
+    shellVariablePunctuation: token('punctuation.definition.variable.shell'),
+    shellCommand: token('entity.name.command.shell'),
+    // Selectors in CSS code blocks; VS Code scopes the rule to CSS, so match it exactly
+    cssSelector: ruleColor(theme.tokenColors, 'source.css entity.name.tag'),
     heading: token('markup.heading'),
     quote: token('markup.quote'),
     inlineCode: token('markup.inline.raw'),
@@ -158,6 +162,12 @@ function tokenColor(tokenColors, scope, field = 'foreground') {
   });
 
   return best?.color;
+}
+
+// Returns the color of the rule that lists `selector` exactly, for descendant selectors tokenColor ignores
+function ruleColor(tokenColors, selector, field = 'foreground') {
+  const rule = tokenColors.findLast(rule => [rule.scope ?? []].flat().some(s => s.trim() === selector));
+  return rule?.settings?.[field];
 }
 
 function themeColors(file) {
