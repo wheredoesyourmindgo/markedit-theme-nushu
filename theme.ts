@@ -29,7 +29,7 @@ export function nushuTheme(palette: Palette, options?: { dark: boolean }) {
     // MarkEdit italicizes quotes, but the preview doesn't, so only real emphasis stays italic
     '.cm-md-quote': { ...color(palette.quote), fontStyle: 'normal' },
     '.cm-md-quote.cm-md-italic, .cm-md-quote .cm-md-italic': { fontStyle: 'italic' },
-    // Marks inside a quote (like **) stay muted instead of taking the quote gold
+    // Marks inside a quote (like **) stay muted instead of taking the quote color
     '.cm-md-quote.tok-meta, .cm-md-quote .tok-meta': color(palette.mutedText),
     // Quote marks (>) use the keyword magenta. .tok-meta is repeated to outrank the muted rule.
     '.cm-md-quoteMark, .cm-md-quoteMark.tok-meta': color(palette.keyword),

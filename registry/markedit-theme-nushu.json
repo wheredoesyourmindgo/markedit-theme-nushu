@@ -12,6 +12,12 @@
   ],
   "versions": [
     {
+      "version": "1.4.0",
+      "url": "https://github.com/wheredoesyourmindgo/markedit-theme-nushu/releases/download/v1.4.0/markedit-theme-nushu.js",
+      "sha256": "4ec42aca2bc703835b3de2d6c24e7afc96bcb4e7455dbcbadafd465940d10912",
+      "notes": "Match Nushu 2.9.0 for VS Code: quotes are muted gray, like quotes on GitHub, instead of gold."
+    },
+    {
       "version": "1.3.0",
       "url": "https://github.com/wheredoesyourmindgo/markedit-theme-nushu/releases/download/v1.3.0/markedit-theme-nushu.js",
       "sha256": "68525bda91ed45c1e755a326401780fc1c117b47b2da303a60959423d5c400a9",
