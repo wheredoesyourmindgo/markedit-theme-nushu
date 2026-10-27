@@ -12,6 +12,12 @@
   ],
   "versions": [
     {
+      "version": "1.5.0",
+      "url": "https://github.com/wheredoesyourmindgo/markedit-theme-nushu/releases/download/v1.5.0/markedit-theme-nushu.js",
+      "sha256": "3a4df2e922e65303e60f55d4d8838522bacd8057f1d456987c12fdc4fee49093",
+      "notes": "Style the MarkEdit Preview pane with Nushu colors, including code blocks and a magenta quote bar."
+    },
+    {
       "version": "1.4.0",
       "url": "https://github.com/wheredoesyourmindgo/markedit-theme-nushu/releases/download/v1.4.0/markedit-theme-nushu.js",
       "sha256": "4ec42aca2bc703835b3de2d6c24e7afc96bcb4e7455dbcbadafd465940d10912",

@@ -2,7 +2,7 @@
 
 [Nushu](https://github.com/wheredoesyourmindgo/nushu-vscode-theme) Light and Nushu Dark for [MarkEdit](https://github.com/MarkEdit-app/MarkEdit), built on [MarkEdit-theming](https://github.com/MarkEdit-app/MarkEdit-theming). Nushu is a warm, low-contrast theme built on GitHub's Primer colors, with paper and earth-tone backgrounds.
 
-The theme follows MarkEdit's appearance, so it switches between Nushu Light and Nushu Dark with the system. Like every MarkEdit theme, it doesn't appear in MarkEdit's Settings. It overrides whichever theme is selected there. GitHub is the closest base, so keep that selected.
+The theme follows MarkEdit's appearance, so it switches between Nushu Light and Nushu Dark with the system. It also styles the preview pane of the [MarkEdit Preview](https://github.com/MarkEdit-app/MarkEdit-preview) extension, including code blocks. Like every MarkEdit theme, it doesn't appear in MarkEdit's Settings. It overrides whichever theme is selected there. GitHub is the closest base, so keep that selected.
 
 ## Installation
 
@@ -37,7 +37,7 @@ npm run build
 
 To build `dist/` without copying it into MarkEdit, for example in CI, set `CI=1`.
 
-`theme.ts` styles the markdown and `syntax.ts` styles code inside fenced code blocks. To check changes, open `demo/markdown.md` and `demo/code.md` (code in many languages) in MarkEdit. Code blocks are highlighted by MarkEdit's [Language Data](https://markedit-app.github.io/extensions/#markedit-language-data) extension.
+`theme.ts` styles the markdown, `syntax.ts` styles code inside fenced code blocks, and `preview.ts` styles the MarkEdit Preview pane. To check changes, open `demo/markdown.md` and `demo/code.md` (code in many languages) in MarkEdit. Code blocks are highlighted by MarkEdit's [Language Data](https://markedit-app.github.io/extensions/#markedit-language-data) extension.
 
 ## Publishing to the MarkEdit Extension Registry
 
