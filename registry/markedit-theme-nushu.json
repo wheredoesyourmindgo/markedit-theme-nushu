@@ -12,6 +12,12 @@
   ],
   "versions": [
     {
+      "version": "1.6.0",
+      "url": "https://github.com/wheredoesyourmindgo/markedit-theme-nushu/releases/download/v1.6.0/markedit-theme-nushu.js",
+      "sha256": "f1f436fac0dbfb1c378e27fab2edd9217223348ac80ef14e5821fdb50208ba48",
+      "notes": "Match Nushu 2.10.0 for VS Code: escapes and HTML entities in markdown text are muted like ** and _, quote markers (>) are bold, and built-in functions in code blocks are purple."
+    },
+    {
       "version": "1.5.0",
       "url": "https://github.com/wheredoesyourmindgo/markedit-theme-nushu/releases/download/v1.5.0/markedit-theme-nushu.js",
       "sha256": "3a4df2e922e65303e60f55d4d8838522bacd8057f1d456987c12fdc4fee49093",
