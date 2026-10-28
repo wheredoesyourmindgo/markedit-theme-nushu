@@ -24,7 +24,8 @@ const highlightScopes = {
   atom: 'constant.language',
   literal: 'constant.numeric',
   string: 'string',
-  special: 'constant.character',
+  // Colors escapes (\*) in markdown text; code blocks use the syntax colors below
+  special: 'constant.character.escape.markdown',
   variable: 'variable',
   local: 'variable.other',
   type: 'entity.name.type',
@@ -48,6 +49,7 @@ const syntaxScopes = {
   punctuation: 'punctuation',
   embedded: 'punctuation.section.embedded',
   string: 'string',
+  character: 'string',
   regexp: 'string.regexp',
   escape: 'constant.character.escape',
   constant: 'constant.language',
@@ -106,7 +108,8 @@ function paletteColors(theme) {
     cssSelector: ruleColor(theme.tokenColors, 'source.css entity.name.tag'),
     // SQL column types and function calls (see sqlFunctionRanges in syntax.ts)
     sqlType: token('storage.type.sql'),
-    sqlFunction: ruleColor(theme.tokenColors, 'source.sql support.function'),
+    // VS Code colors all built-in functions this way (support.function), SQL's included
+    sqlFunction: token('support.function'),
     heading: token('markup.heading'),
     quote: token('markup.quote'),
     inlineCode: token('markup.inline.raw'),

@@ -32,7 +32,7 @@ export function nushuTheme(palette: Palette, options?: { dark: boolean }) {
     // Marks inside a quote (like **) stay muted instead of taking the quote color
     '.cm-md-quote.tok-meta, .cm-md-quote .tok-meta': color(palette.mutedText),
     // Quote marks (>) use the keyword magenta. .tok-meta is repeated to outrank the muted rule.
-    '.cm-md-quoteMark, .cm-md-quoteMark.tok-meta': color(palette.keyword),
+    '.cm-md-quoteMark, .cm-md-quoteMark.tok-meta': { ...color(palette.keyword), fontWeight: 'bold' },
     '.cm-md-listMark, .cm-md-taskMarker': color(palette.mutedText),
     // .cm-md-link is MarkEdit's clickable-link span, nested inside these and covering the whole
     // link, so it's left uncolored. Marks and URLs can also carry .tok-link, so their rules come after.

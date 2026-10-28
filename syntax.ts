@@ -23,7 +23,9 @@ const syntaxTags: Record<SyntaxGroup, Tag[]> = {
     t.punctuation, t.separator, t.bracket, t.paren, t.squareBracket, t.brace, t.angleBracket, t.derefOperator,
   ],
   embedded: [t.special(t.brace)], // ${ } in template strings
-  string: [t.string, t.special(t.string), t.docString, t.attributeValue, t.character, t.content],
+  string: [t.string, t.special(t.string), t.docString, t.attributeValue, t.content],
+  // Character literals in code, and HTML entities (&copy;) in markdown, which are muted outside code blocks
+  character: [t.character],
   regexp: [t.regexp],
   escape: [t.escape],
   constant: [t.bool, t.null, t.atom, t.self, t.color, t.constant(t.name), t.standard(t.name)],
@@ -277,7 +279,7 @@ const languagePlugin = ViewPlugin.fromClass(class {
   }
 }, { decorations: plugin => plugin.decorations });
 
-// Colors code inside fenced code blocks only, so markdown keeps its own styles
+// Colors code inside fenced code blocks, so markdown keeps its own styles (HTML entities aside)
 export function nushuSyntax(palette: Palette, options?: { dark: boolean }): Extension {
   const important = (color: string) => ({ color: `${color} !important` });
   const styles: Record<string, Record<string, string>> = Object.fromEntries(
@@ -287,6 +289,10 @@ export function nushuSyntax(palette: Palette, options?: { dark: boolean }): Exte
       { ...important(color), fontStyle: 'normal' },
     ]),
   );
+
+  // HTML entities (&copy;) in markdown text are syntax, muted like ** and _, as in VS Code.
+  // The code block rule above outranks this one, so character literals in code keep their color.
+  styles[`.${className('character')}`] = important(palette.mutedText);
 
   // Language-specific colors; the extra class outranks the rules above
   const json = `.cm-md-codeBlock.${languageClass('json')}`;
